@@ -15,16 +15,8 @@ import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha, InputBase } from "@mui/material";
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
-
 const drawerWidth = 240;
-const navItems = ["Home", "Users"];
+const navItems = ["Home", "Users", "Favorites"];
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -67,8 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header(props: Props) {
-  const { window } = props;
+function Header() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -92,9 +83,6 @@ export default function Header(props: Props) {
       </List>
     </Box>
   );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -136,12 +124,11 @@ export default function Header(props: Props) {
       </AppBar>
       <Box component="nav">
         <Drawer
-          container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -160,3 +147,5 @@ export default function Header(props: Props) {
     </Box>
   );
 }
+
+export default React.memo(Header);
