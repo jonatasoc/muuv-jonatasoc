@@ -44,7 +44,7 @@ const Home: NextPage = () => {
         setLoading(false);
       }
     },
-    [users, perPage]
+    [users]
   );
 
   useEffect(() => {
