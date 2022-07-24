@@ -15,7 +15,6 @@ const LIMIT_PER_PAGE = 6;
 const Home: NextPage = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(INITIAL_LIMIT_PER_PAGE);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
