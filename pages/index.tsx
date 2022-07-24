@@ -1,74 +1,69 @@
-import { Container } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
+import Header from "components/Header";
+import Layout from "components/Layout";
+import ListUsers from "components/ListUsers";
+import ListUsersSkeleton from "components/skeleton/ListUsersSkeleton";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import Header from "../components/Header";
-import styles from "../styles/Home.module.css";
+import { useCallback, useEffect, useState } from "react";
+import { api } from "services/api";
+
+const LIMIT_PER_PAGE = 10;
 
 const Home: NextPage = () => {
+  const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  const fetchUsers = useCallback(async (page: number) => {
+    try {
+      const { data: response } = await api.get("/users", {
+        params: {
+          page,
+          per_page: LIMIT_PER_PAGE,
+        },
+      });
+
+      const { data: users } = response;
+
+      setUsers(users);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchUsers(page);
+  }, [page]);
+
   return (
-    <Container>
+    <>
       <Head>
         <title>MUUV LABS - Challenge</title>
         <meta name="description" content="Challenge to MUUV LABS" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <Header />
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Layout>
+        <Grid container justifyContent="center" sx={{ m: 1 }}>
+          {loading ? <ListUsersSkeleton /> : <ListUsers users={users} />}
+        </Grid>
+        <Grid
+          container
+          justifyContent="center"
+          sx={{
+            backgroundColor: "#f6f7fb",
+            p: 2,
+          }}
         >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </Container>
+          <Typography variant="h4" color="primary">
+            Your favorites
+          </Typography>
+        </Grid>
+      </Layout>
+    </>
   );
 };
 
