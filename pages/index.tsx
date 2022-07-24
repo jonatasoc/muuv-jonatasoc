@@ -1,4 +1,5 @@
 import { Container, Grid, Typography } from "@mui/material";
+import { AxiosResponse } from "axios";
 import Header from "components/Header";
 import Layout from "components/Layout";
 import ListUsers from "components/ListUsers";
@@ -7,17 +8,21 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 import { api } from "services/api";
+import { ReqResApiPaginatedResponse, User } from "services/types";
 
 const LIMIT_PER_PAGE = 10;
 
 const Home: NextPage = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
   const fetchUsers = useCallback(async (page: number) => {
     try {
-      const { data: response } = await api.get("/users", {
+      const { data: response } = await api.get<
+        string,
+        AxiosResponse<ReqResApiPaginatedResponse<User[]>>
+      >("/users", {
         params: {
           page,
           per_page: LIMIT_PER_PAGE,
