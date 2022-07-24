@@ -10,7 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 import { api } from "services/api";
 import { ReqResApiPaginatedResponse, User } from "services/types";
 
-const INITIAL_LIMIT_PER_PAGE = 6;
+const LIMIT_PER_PAGE = 6;
 
 const Home: NextPage = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         >("/users", {
           params: {
             page,
-            per_page: perPage,
+            per_page: LIMIT_PER_PAGE,
           },
         });
 
@@ -39,8 +39,6 @@ const Home: NextPage = () => {
 
         setUsers([...users, ...newUsers]);
 
-        // After first load, setPerPage to load users by 4
-        setPerPage(4);
       } catch (err) {
         console.error(err);
       } finally {
