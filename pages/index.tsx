@@ -1,6 +1,5 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
-import Header from "components/Header";
 import Layout from "components/Layout";
 import ListUsers from "components/ListUsers";
 import ListUsersSkeleton from "components/skeleton/ListUsersSkeleton";
@@ -10,7 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import { api } from "services/api";
 import { ReqResApiPaginatedResponse, User } from "services/types";
 
-const LIMIT_PER_PAGE = 10;
+const LIMIT_PER_PAGE = 6;
 
 const Home: NextPage = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -52,20 +51,42 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <Grid container justifyContent="center" sx={{ m: 1 }}>
-          {loading ? <ListUsersSkeleton /> : <ListUsers users={users} />}
+        <Grid sx={{ maxWidth: 640, margin: "0 auto" }}>
+          <Typography
+            variant="h4"
+            color="primary"
+            sx={{ mb: 2, textAlign: "center" }}
+          >
+            Our Users
+          </Typography>
+          <Grid container justifyContent="center" sx={{ m: 1 }}>
+            {loading ? <ListUsersSkeleton /> : <ListUsers users={users} />}
+          </Grid>
         </Grid>
         <Grid
           container
           justifyContent="center"
+          flexDirection="column"
           sx={{
             backgroundColor: "#f6f7fb",
             p: 2,
+            width: "calc(100vw - 18px)",
           }}
         >
-          <Typography variant="h4" color="primary">
+          <Typography
+            variant="h4"
+            color="primary"
+            sx={{ mb: 2, textAlign: "center" }}
+          >
             Your favorites
           </Typography>
+          <Grid
+            container
+            justifyContent="center"
+            sx={{ m: 1, maxWidth: 640, margin: "0 auto" }}
+          >
+            {loading ? <ListUsersSkeleton /> : <ListUsers users={users} />}
+          </Grid>
         </Grid>
       </Layout>
     </>

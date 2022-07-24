@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha, InputBase } from "@mui/material";
+import Link from "next/link";
 
 const drawerWidth = 240;
 const navItems = ["Home", "Users", "Favorites"];
@@ -68,9 +69,11 @@ function Header() {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        MUUV
-      </Typography>
+      <Link href="/">
+        <Typography variant="h6" sx={{ my: 2, cursor: "pointer" }}>
+          MUUV
+        </Typography>
+      </Link>
       <Divider />
       <List>
         {navItems.map((item) => (
@@ -97,13 +100,19 @@ function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            MUUV
-          </Typography>
+          <Link href="/">
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", sm: "block" },
+                cursor: "pointer",
+              }}
+            >
+              MUUV
+            </Typography>
+          </Link>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

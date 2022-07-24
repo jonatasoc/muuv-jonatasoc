@@ -13,7 +13,7 @@ export default function Layout({ children }: LayoutPros) {
       sx={{ margin: { xs: 0 }, maxWidth: { xs: "unset" }, padding: { xs: 0 } }}
     >
       <Header />
-      <Grid component="main">
+      <Grid component="main" container justifyContent="center">
         <Grid sx={{ minHeight: "100vh" }}>{children}</Grid>
       </Grid>
       <Footer />

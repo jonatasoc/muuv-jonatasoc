@@ -1,5 +1,16 @@
 import { GetStaticPaths, GetStaticProps } from "next";
-import { Avatar, Card, ListItemAvatar, ListItemText } from "@mui/material";
+import {
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  IconButton,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 
 import { api } from "services/api";
 import { ReqResApiPaginatedResponse, User } from "services/types";
@@ -23,15 +34,28 @@ export default function UserProfile(props: UserProfileProps) {
 
   return (
     <Layout>
-      <Card sx={{ width: 327, height: 144, px: 2, py: 1 }}>
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={user.avatar} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={`${user.first_name} ${user.last_name}`}
-          secondary={<React.Fragment>{user.email}</React.Fragment>}
+      <Card sx={{ maxWidth: 345 }}>
+        <CardHeader
+          title={`${user.first_name} ${user.last_name}`}
+          subheader={user.email}
         />
-        <FavoriteBorder />
+        <CardMedia
+          component="img"
+          height="194"
+          image={user.avatar}
+          alt={user.first_name}
+        />
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            Add <strong>{user.first_name}</strong> to your favorites, if you
+            like.
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+            <FavoriteBorder />
+          </IconButton>
+        </CardActions>
       </Card>
     </Layout>
   );
