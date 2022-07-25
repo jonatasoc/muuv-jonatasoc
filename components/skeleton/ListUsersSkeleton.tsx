@@ -7,13 +7,14 @@ import { Fragment } from "react";
 
 export default function ListUsersSkeleton() {
   return (
-    <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+    <List sx={{ width: "100%" }}>
       {Array.from({ length: 6 }).map((user, index) => (
         <Fragment key={index}>
           <ListItem alignItems="flex-start">
             <Card
               sx={{
                 width: { sm: "100%", md: 600 },
+                minWidth: 322,
                 height: 84,
                 px: 2,
                 py: 1,
@@ -23,7 +24,7 @@ export default function ListUsersSkeleton() {
                 <ListItemAvatar sx={{ margin: 0 }}>
                   <Skeleton variant="circular" width={40} height={40} />
                 </ListItemAvatar>
-                <ListItemText>
+                <ListItemText sx={{ margin: 0 }}>
                   <Skeleton variant="text" width={270} height={24} />
                   <Skeleton variant="text" width={272} height={20} />
                 </ListItemText>
