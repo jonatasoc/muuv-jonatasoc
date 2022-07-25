@@ -95,7 +95,7 @@ export default function ListUsers({
           </Fragment>
         ))}
       </List>
-      {loadMore && users.length < totalUsers! && (
+      {users.length < totalUsers! && (
         <Button variant="outlined" sx={{ my: 2 }} onClick={loadMore}>
           Load More
         </Button>
