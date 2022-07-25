@@ -34,7 +34,7 @@ export default function UserProfile(props: UserProfileProps) {
 
   return (
     <Layout>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, height: "100%" }}>
         <CardHeader
           title={`${user.first_name} ${user.last_name}`}
           subheader={user.email}

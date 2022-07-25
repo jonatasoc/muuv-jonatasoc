@@ -10,36 +10,31 @@ const navItems = ["Users", "Favorites"];
 
 function Header() {
   return (
-    <Box sx={{ display: "flex" }}>
-      <AppBar component="nav">
-        <Toolbar>
-          <Link href="/">
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{
-                flexGrow: 1,
-                cursor: "pointer",
-              }}
-            >
-              MUUV
-            </Typography>
-          </Link>
-          <Box>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                <Link href={`/#${item.toLowerCase()}`} scroll={false}>
-                  {item}
-                </Link>
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-      </Box>
-    </Box>
+    <AppBar component="nav">
+      <Toolbar>
+        <Link href="/">
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              cursor: "pointer",
+            }}
+          >
+            MUUV
+          </Typography>
+        </Link>
+        <Box>
+          {navItems.map((item) => (
+            <Button key={item} sx={{ color: "#fff" }}>
+              <Link href={`/#${item.toLowerCase()}`} scroll={false}>
+                {item}
+              </Link>
+            </Button>
+          ))}
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }
 

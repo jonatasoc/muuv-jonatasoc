@@ -14,12 +14,14 @@ interface ListUsersProps {
   users: User[];
   loadMore?: () => void;
   totalUsers?: number;
+  showLoadMoreButton?: boolean;
 }
 
 export default function ListUsers({
   users,
   loadMore,
   totalUsers,
+  showLoadMoreButton = true,
 }: ListUsersProps) {
   const { isAlreadyFavorite, addFavorite, removeFavorite } = useFavorites();
 
@@ -48,7 +50,7 @@ export default function ListUsers({
               <Link href={String(user.id)}>
                 <Card
                   sx={{
-                    width: { sm: "100%", md: 600 },
+                    width: { xs: "100%", md: 600 },
                     minWidth: 322,
                     height: 84,
                     px: 2,
@@ -63,7 +65,7 @@ export default function ListUsers({
                     <ListItemText
                       sx={{ margin: 0 }}
                       primary={
-                        <Typography variant="body1" lineHeight="8px">
+                        <Typography variant="body1" lineHeight={1}>
                           {`${user.first_name} ${user.last_name}`}
                         </Typography>
                       }
@@ -95,7 +97,7 @@ export default function ListUsers({
           </Fragment>
         ))}
       </List>
-      {users.length < totalUsers! && (
+      {showLoadMoreButton && users?.length < totalUsers! && (
         <Button variant="outlined" sx={{ my: 2 }} onClick={loadMore}>
           Load More
         </Button>

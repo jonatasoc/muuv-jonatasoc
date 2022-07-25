@@ -19,8 +19,6 @@ const Home: NextPage = () => {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const isFirstRender = useRef(true);
-
   const { userFavorites } = useFavorites();
 
   async function fetchUsers() {
@@ -47,11 +45,6 @@ const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
     fetchUsers();
   }, [page]);
 
@@ -68,12 +61,11 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <Grid sx={{ maxWidth: 640, margin: "0 auto" }} id="users">
-          <Typography
-            variant="h4"
-            color="primary"
-            sx={{ mb: 2, textAlign: "center" }}
-          >
+        <Grid
+          sx={{ maxWidth: 640, margin: "0 auto", width: "100%" }}
+          id="users"
+        >
+          <Typography variant="h4" color="primary" sx={{ textAlign: "center" }}>
             Our Users
           </Typography>
           <Grid container justifyContent="center">
@@ -89,21 +81,15 @@ const Home: NextPage = () => {
           </Grid>
         </Grid>
         <Grid
-          container
-          justifyContent="center"
-          flexDirection="column"
           sx={{
+            margin: "0 auto",
             backgroundColor: "#f6f7fb",
-            p: 2,
-            width: "calc(100vw - 18px)",
+            paddingTop: "16px",
+            width: "100%",
           }}
           id="favorites"
         >
-          <Typography
-            variant="h4"
-            color="primary"
-            sx={{ mb: 2, textAlign: "center" }}
-          >
+          <Typography variant="h4" color="primary" sx={{ textAlign: "center" }}>
             Your favorites
           </Typography>
           <Grid
@@ -114,7 +100,7 @@ const Home: NextPage = () => {
             {loading ? (
               <ListUsersSkeleton />
             ) : (
-              <ListUsers users={userFavorites} />
+              <ListUsers users={userFavorites} showLoadMoreButton={false} />
             )}
           </Grid>
         </Grid>

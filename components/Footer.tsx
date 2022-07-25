@@ -19,7 +19,7 @@ function Footer() {
           marginRight: "8px",
         }}
       >
-        Made by{" "}
+        Made by <strong>jonatasoc</strong>{" "}
       </span>
       <a
         href="https://github.com/jonatasoc"
