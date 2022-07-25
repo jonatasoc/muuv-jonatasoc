@@ -1,25 +1,23 @@
-import { GetStaticPaths, GetStaticProps } from "next";
 import {
-  Avatar,
   Card,
   CardActions,
   CardContent,
   CardHeader,
   CardMedia,
   IconButton,
-  ListItemAvatar,
-  ListItemText,
   Typography,
 } from "@mui/material";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 import { api } from "services/api";
 import { ReqResApiPaginatedResponse, User } from "services/types";
 
-import React, { useState } from "react";
-import { FavoriteBorder } from "@mui/icons-material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { AxiosResponse } from "axios";
-import { ParsedUrlQuery } from "querystring";
 import Layout from "components/Layout";
+import { useFavorites } from "contexts/FavoritesContext";
+import { ParsedUrlQuery } from "querystring";
+import React, { useCallback, useState } from "react";
 
 export interface UserProfileProps {
   user: User;
@@ -31,6 +29,24 @@ interface Params extends ParsedUrlQuery {
 
 export default function UserProfile(props: UserProfileProps) {
   const [user, setUser] = useState(props.user);
+
+  const { isAlreadyFavorite, addFavorite, removeFavorite } = useFavorites();
+
+  const handleFavorite = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, user: User) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const isFavorite = isAlreadyFavorite(user.id);
+
+      if (!isFavorite) {
+        addFavorite(user);
+      } else {
+        removeFavorite(user.id);
+      }
+    },
+    [isAlreadyFavorite, addFavorite, removeFavorite]
+  );
 
   return (
     <Layout>
@@ -52,8 +68,11 @@ export default function UserProfile(props: UserProfileProps) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteBorder />
+          <IconButton
+            aria-label="add to favorites"
+            onClick={(e) => handleFavorite(e, user)}
+          >
+            {isAlreadyFavorite(user.id) ? <Favorite /> : <FavoriteBorder />}
           </IconButton>
         </CardActions>
       </Card>
